@@ -1,6 +1,6 @@
-ratings = LOAD 'user/maria_dev/ml-100k/u.data' AS (userID: int, movieID: int, rating: int, ratingTime: int);
+ratings = LOAD '/ml-100k/u.data' AS (userID: int, movieID: int, rating: int, ratingTime: int);
 
-metadata = LOAD 'user/maria_dev/ml-100k/u.item' USING PigStorage('|')
+metadata = LOAD '/ml-100k/u.item' USING PigStorage('|')
   AS (movieID: int, movieTitle: chararray, releaseDate: chararray, videoRelease: chararray, imdbLink: chararray);
 
 nameLookup = FOREACH metadata GENERATE movieID, movieTitle, ToUnixTime(ToDate(releaseDate, 'dd-MMM-yyyy')) AS releaseTime;
