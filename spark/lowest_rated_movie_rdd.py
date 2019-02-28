@@ -17,3 +17,14 @@ if __name__ == '__main__':
     sc = SparkContext(conf = conf)
 
     movieNames = loadMovieNames()
+
+    lines = sc.textFile('../u.data')
+    movieRatings = lines.map(parseInput)
+    ratingTotalAndCount = movieRatings.reduceByKey(lambda movie1, movie2: (movie1[0] + movie2[0], movie1[1] + movie2[1]))
+    averageRatings = ratingTotalAndCount.mapValues(lambda totalAndCount : totalAndCount[0] / totalAndCount[1])
+    sortedMovies = averageRatings.sortBy(lambda x : x[1])
+    results = sortedMovies.take(10)
+
+    for result in results:
+        print(movieNames[result[0]], result[1])
+
