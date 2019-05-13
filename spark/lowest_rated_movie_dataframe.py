@@ -17,9 +17,11 @@ def parseInput(line):
     if __name__ = '__main__':
         spark = SparkSession.builder.appName('PopularMovies').getOrCreate() #create a new SparkSession if none exists
         movieNames = loadMovieNames()
-        lines = spark.sparkContext.textFile('hdfs:///user/maria_Dev_ml-100k/u.data')
-        movies = line.map(parseInput)
-        movieDataset = spark.createDataFrame(movies)
+
+        lines = spark.sparkContext.textFile('hdfs:///user/maria_Dev_ml-100k/u.data')    #read input file
+        movies = line.map(parseInput)   #convert to RDD object
+        movieDataset = spark.createDataFrame(movies)    #construct DataFrame object
+
         averageRatings = movieDataset.groupBy('movieID').avg('rating')
         counts = movieDataset.groupBy('movieID').count()
         
