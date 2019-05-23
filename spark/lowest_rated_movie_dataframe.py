@@ -14,7 +14,7 @@ def parseInput(line):
     fields = line.split()
     return Row(movieID = int(fields[1], rating = float(fields[2])))
 
-if __name__ = '__main__':
+if __name__ == '__main__':
     spark = SparkSession.builder.appName('PopularMovies').getOrCreate() #create a new SparkSession if none exists
     movieNames = loadMovieNames()
 
